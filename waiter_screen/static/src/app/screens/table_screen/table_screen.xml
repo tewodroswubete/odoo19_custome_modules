@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="waiter_screen.TableScreen">
+        <div class="table-screen">
+            <!-- Header -->
+            <div class="screen-header">
+                <div class="header-left">
+                    <h2>Select Table</h2>
+                    <span class="waiter-badge">👤 <t t-esc="props.waiter.name"/></span>
+                </div>
+                <div class="header-right">
+                    <button class="btn btn-icon" t-on-click="props.onRefresh" title="Refresh">
+                        🔄
+                    </button>
+                    <button class="btn btn-danger" t-on-click="props.onLogout">
+                        Logout
+                    </button>
+                </div>
+            </div>
+
+            <!-- Floor Selector -->
+            <div class="floor-selector">
+                <t t-foreach="props.floors" t-as="floor" t-key="floor.id">
+                    <button
+                        class="floor-btn"
+                        t-att-class="{ 'active': state.selectedFloor === floor.id }"
+                        t-on-click="() => this.selectFloor(floor.id)">
+                        <t t-esc="floor.name"/>
+                    </button>
+                </t>
+            </div>
+
+            <!-- Tables Grid -->
+            <div class="tables-container">
+                <t t-if="filteredTables.length === 0">
+                    <div class="no-tables">
+                        <p>No tables found on this floor</p>
+                    </div>
+                </t>
+                <div class="tables-grid">
+                    <t t-foreach="filteredTables" t-as="table" t-key="table.id">
+                        <div
+                            class="table-card"
+                            t-att-class="getTableStatusClass(table.status)"
+                            t-on-click="() => props.onSelectTable(table)">
+                            <div class="table-number">
+                                Table <t t-esc="table.table_number"/>
+                            </div>
+                            <div class="table-info">
+                                <span class="table-seats">
+                                    👥 <t t-esc="table.seats"/>
+                                </span>
+                            </div>
+                            <div class="table-status-badge">
+                                <t t-esc="getTableStatusLabel(table.status)"/>
+                            </div>
+                            <t t-if="table.current_waiter_name">
+                                <div class="table-waiter">
+                                    <t t-esc="table.current_waiter_name"/>
+                                </div>
+                            </t>
+                        </div>
+                    </t>
+                </div>
+            </div>
+        </div>
+    </t>
+</templates>

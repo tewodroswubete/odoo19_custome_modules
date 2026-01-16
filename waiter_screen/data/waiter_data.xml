@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!-- Default demo waiter (for testing) -->
+        <!-- This will only be created in demo mode -->
+    </data>
+</odoo>

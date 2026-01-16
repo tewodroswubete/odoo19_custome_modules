@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="waiter_screen.OrderScreen">
+        <div class="order-screen">
+            <!-- Header -->
+            <div class="screen-header">
+                <div class="header-left">
+                    <button class="btn btn-secondary" t-on-click="props.onBack">
+                        ← Back
+                    </button>
+                    <h2>Table <t t-esc="props.table.table_number"/> - Take Order</h2>
+                </div>
+                <div class="header-right">
+                    <span class="waiter-badge">👤 <t t-esc="props.waiter.name"/></span>
+                </div>
+            </div>
+
+            <div class="order-content">
+                <!-- Product Selection (Left Side) -->
+                <div class="product-section">
+                    <!-- Search Bar -->
+                    <div class="search-bar">
+                        <input
+                            type="text"
+                            class="form-control"
+                            placeholder="🔍 Search products..."
+                            t-model="state.searchQuery" />
+                    </div>
+
+                    <!-- Categories -->
+                    <div class="category-selector">
+                        <button
+                            class="category-btn"
+                            t-att-class="{ 'active': !state.selectedCategory }"
+                            t-on-click="() => this.selectCategory(null)">
+                            All
+                        </button>
+                        <t t-foreach="props.categories" t-as="category" t-key="category.id">
+                            <button
+                                class="category-btn"
+                                t-att-class="{ 'active': state.selectedCategory === category.id }"
+                                t-on-click="() => this.selectCategory(category.id)">
+                                <t t-esc="category.name"/>
+                            </button>
+                        </t>
+                    </div>
+
+                    <!-- Products Grid -->
+                    <div class="products-grid">
+                        <t t-foreach="filteredProducts" t-as="product" t-key="product.id">
+                            <div class="product-card" t-on-click="() => this.addProduct(product)">
+                                <div class="product-image">
+                                    <t t-if="product.image_128">
+                                        <img t-att-src="'data:image/png;base64,' + product.image_128" alt="Product" />
+                                    </t>
+                                    <t t-else="">
+                                        <div class="product-placeholder">🍽️</div>
+                                    </t>
+                                </div>
+                                <div class="product-name">
+                                    <t t-esc="product.name"/>
+                                </div>
+                                <div class="product-price">
+                                    $<t t-esc="product.list_price.toFixed(2)"/>
+                                </div>
+                            </div>
+                        </t>
+                    </div>
+                </div>
+
+                <!-- Order Summary (Right Side) -->
+                <div class="order-summary-section">
+                    <h3>Order Summary</h3>
+
+                    <div class="order-lines">
+                        <t t-if="state.orderLines.length === 0">
+                            <div class="empty-order">
+                                <p>No items added yet</p>
+                                <p class="text-muted">Tap products to add them</p>
+                            </div>
+                        </t>
+
+                        <t t-foreach="state.orderLines" t-as="line" t-key="line_index">
+                            <div class="order-line">
+                                <div class="line-info">
+                                    <div class="line-name"><t t-esc="line.product_name"/></div>
+                                    <div class="line-price">$<t t-esc="line.price_unit.toFixed(2)"/></div>
+                                </div>
+                                <div class="line-controls">
+                                    <button class="btn-qty" t-on-click="() => this.updateQuantity(line, -1)">-</button>
+                                    <span class="qty-display"><t t-esc="line.qty"/></span>
+                                    <button class="btn-qty" t-on-click="() => this.updateQuantity(line, 1)">+</button>
+                                    <button class="btn-remove" t-on-click="() => this.removeLine(line)">🗑️</button>
+                                </div>
+                                <div class="line-subtotal">
+                                    $<t t-esc="(line.qty * line.price_unit).toFixed(2)"/>
+                                </div>
+                            </div>
+                        </t>
+                    </div>
+
+                    <!-- Notes -->
+                    <div class="order-notes">
+                        <label>Special Instructions</label>
+                        <textarea
+                            class="form-control"
+                            placeholder="Allergies, special requests..."
+                            t-model="state.notes"
+                            rows="3"></textarea>
+                    </div>
+
+                    <!-- Total -->
+                    <div class="order-total">
+                        <span>Total:</span>
+                        <span class="total-amount">$<t t-esc="orderTotal.toFixed(2)"/></span>
+                    </div>
+
+                    <!-- Send Order Button -->
+                    <button
+                        class="btn btn-primary btn-send-order"
+                        t-on-click="handleSendOrder"
+                        t-att-disabled="state.orderLines.length === 0">
+                        Send to Kitchen 🍳
+                    </button>
+                </div>
+            </div>
+        </div>
+    </t>
+</templates>

@@ -1,0 +1,15 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_pos_order_waiter,pos.order waiter,point_of_sale.model_pos_order,group_waiter,1,1,1,0
+access_pos_order_line_waiter,pos.order.line waiter,point_of_sale.model_pos_order_line,group_waiter,1,1,1,0
+access_pos_payment_waiter,pos.payment waiter,point_of_sale.model_pos_payment,group_waiter,1,1,1,0
+access_pos_session_waiter,pos.session waiter,point_of_sale.model_pos_session,group_waiter,1,0,0,0
+access_pos_config_waiter,pos.config waiter,point_of_sale.model_pos_config,group_waiter,1,0,0,0
+access_restaurant_floor_waiter,restaurant.floor waiter,pos_restaurant.model_restaurant_floor,group_waiter,1,0,0,0
+access_restaurant_table_waiter,restaurant.table waiter,pos_restaurant.model_restaurant_table,group_waiter,1,1,0,0
+access_product_product_waiter,product.product waiter,product.model_product_product,group_waiter,1,0,0,0
+access_product_template_waiter,product.template waiter,product.model_product_template,group_waiter,1,0,0,0
+access_pos_category_waiter,pos.category waiter,point_of_sale.model_pos_category,group_waiter,1,0,0,0
+access_pos_payment_method_waiter,pos.payment.method waiter,point_of_sale.model_pos_payment_method,group_waiter,1,0,0,0
+access_res_partner_waiter,res.partner waiter,base.model_res_partner,group_waiter,1,1,1,0
+access_account_tax_waiter,account.tax waiter,account.model_account_tax,group_waiter,1,0,0,0
+access_uom_uom_waiter,uom.uom waiter,uom.model_uom_uom,group_waiter,1,0,0,0

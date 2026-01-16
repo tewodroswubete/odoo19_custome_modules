@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- Patch to ensure AI response trigger works in chat -->
+    <t t-inherit="mail.ChatWindow" t-inherit-mode="extension">
+        <xpath expr="//div[@class='o-mail-chat-window']" position="attributes">
+            <attribute name="t-att-data-ai-agent-id">thread.ai_agent_id</attribute>
+            <attribute name="t-on-message-posted.stop="_onMessagePosted"</attribute>
+        </xpath>
+    </t>
+
+    <!-- Add AI response handler -->
+    <t t-inherit="mail.Composer" t-inherit-mode="extension">
+        <xpath expr="//textarea" position="attributes">
+            <attribute name="t-on-keydown.enter.stop.prevent="_onEnterKey"</attribute>
+        </xpath>
+    </t>
+</odoo>

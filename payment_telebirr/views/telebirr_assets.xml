@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <!-- Inject any JS SDK needed by Telebirr on checkout pages -->
+  <template id="telebirr_sdk_assets">
+    <!-- If Telebirr publishes a public SDK, load it here. Otherwise omit. -->
+    <!-- <script type="text/javascript" src="https://developerportal.ethiotelebirr.et/sdk.js"/> -->
+  </template>
+
+  <template id="payment_form" inherit_id="payment.form">
+    <xpath expr="." position="inside">
+      <t t-call="payment_telebirr.telebirr_sdk_assets"/>
+    </xpath>
+  </template>
+
+  <template id="express_checkout" inherit_id="payment.express_checkout">
+    <xpath expr="." position="inside">
+      <t t-call="payment_telebirr.telebirr_sdk_assets"/>
+    </xpath>
+  </template>
+</odoo>

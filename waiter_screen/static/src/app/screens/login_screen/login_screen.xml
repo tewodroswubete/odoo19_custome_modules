@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="waiter_screen.LoginScreen">
+        <div class="login-screen">
+            <div class="login-container">
+                <div class="login-header">
+                    <h1>🍽️ Waiter Screen</h1>
+                    <p>Please login to continue</p>
+                </div>
+
+                <form class="login-form" t-on-submit="handleSubmit">
+                    <div class="form-group">
+                        <label for="waiter-name">Waiter Name</label>
+                        <input
+                            type="text"
+                            id="waiter-name"
+                            class="form-control"
+                            placeholder="Enter your name"
+                            t-model="state.waiterName"
+                            autocomplete="off" />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="waiter-pin">PIN</label>
+                        <input
+                            type="password"
+                            id="waiter-pin"
+                            class="form-control pin-display"
+                            placeholder="••••"
+                            t-att-value="state.waiterPin"
+                            readonly="readonly"
+                            maxlength="4" />
+                    </div>
+
+                    <!-- PIN Pad -->
+                    <div class="pin-pad">
+                        <div class="pin-row">
+                            <button type="button" class="pin-btn" t-on-click="() => this.handlePinInput('1')">1</button>
+                            <button type="button" class="pin-btn" t-on-click="() => this.handlePinInput('2')">2</button>
+                            <button type="button" class="pin-btn" t-on-click="() => this.handlePinInput('3')">3</button>
+                        </div>
+                        <div class="pin-row">
+                            <button type="button" class="pin-btn" t-on-click="() => this.handlePinInput('4')">4</button>
+                            <button type="button" class="pin-btn" t-on-click="() => this.handlePinInput('5')">5</button>
+                            <button type="button" class="pin-btn" t-on-click="() => this.handlePinInput('6')">6</button>
+                        </div>
+                        <div class="pin-row">
+                            <button type="button" class="pin-btn" t-on-click="() => this.handlePinInput('7')">7</button>
+                            <button type="button" class="pin-btn" t-on-click="() => this.handlePinInput('8')">8</button>
+                            <button type="button" class="pin-btn" t-on-click="() => this.handlePinInput('9')">9</button>
+                        </div>
+                        <div class="pin-row">
+                            <button type="button" class="pin-btn pin-btn-clear" t-on-click="handlePinClear">Clear</button>
+                            <button type="button" class="pin-btn" t-on-click="() => this.handlePinInput('0')">0</button>
+                            <button type="button" class="pin-btn pin-btn-back" t-on-click="handlePinBackspace">←</button>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-login">
+                        Login
+                    </button>
+                </form>
+            </div>
+        </div>
+    </t>
+</templates>

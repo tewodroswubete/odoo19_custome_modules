@@ -1,0 +1,16 @@
+<!-- views/telebirr_mapping_views.xml -->
+<odoo>
+  <record id="view_telebirr_mapping_tree" model="ir.ui.view">
+    <field name="name">Telebirr mapping</field>
+    <field name="model">telebirr.order.mapping</field>
+    <field name="arch" type="xml">
+      <list>
+        <field name="merch_order_id"/>
+        <field name="original_reference"/>
+        <field name="db_name"/>
+        <field name="tx_id"/>
+        <field name="create_date"/>
+      </list>
+    </field>
+  </record>
+</odoo>

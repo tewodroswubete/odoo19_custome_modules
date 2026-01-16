@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Main waiter screen template -->
+    <template id="index" name="Waiter Screen">
+        &lt;!DOCTYPE html&gt;
+        <html>
+            <head>
+                <meta charset="UTF-8"/>
+                <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+                <meta name="apple-mobile-web-app-capable" content="yes"/>
+                <meta name="mobile-web-app-capable" content="yes"/>
+
+                <title>Waiter Screen - Odoo POS</title>
+
+                <link rel="icon" href="/web/static/img/favicon.ico" type="image/x-icon"/>
+
+                <!-- Load waiter screen assets -->
+                <t t-call-assets="waiter_screen.assets" t-js="false"/>
+                <t t-call-assets="waiter_screen.assets" t-css="true"/>
+            </head>
+            <body class="waiter-screen-body">
+                <!-- Waiter app will mount here -->
+                <div id="waiter-app-root"></div>
+
+                <!-- Session info passed from backend -->
+                <script type="text/javascript">
+                    odoo.waiter_session_info = <t t-out="json.dumps(session_info)"/>;
+                </script>
+
+                <!-- Load JavaScript -->
+                <t t-call-assets="waiter_screen.assets" t-css="false" t-js="true"/>
+            </body>
+        </html>
+    </template>
+
+    <!-- No active session template -->
+    <template id="no_active_session" name="No Active POS Session">
+        &lt;!DOCTYPE html&gt;
+        <html>
+            <head>
+                <meta charset="UTF-8"/>
+                <title>No Active Session</title>
+                <style>
+                    body {
+                        font-family: Arial, sans-serif;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        height: 100vh;
+                        margin: 0;
+                        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                    }
+                    .message-box {
+                        background: white;
+                        padding: 40px;
+                        border-radius: 10px;
+                        box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+                        text-align: center;
+                        max-width: 500px;
+                    }
+                    .message-box h1 {
+                        color: #e74c3c;
+                        margin-bottom: 20px;
+                    }
+                    .message-box p {
+                        color: #555;
+                        font-size: 16px;
+                        line-height: 1.6;
+                    }
+                    .btn-home {
+                        display: inline-block;
+                        margin-top: 20px;
+                        padding: 12px 30px;
+                        background: #667eea;
+                        color: white;
+                        text-decoration: none;
+                        border-radius: 5px;
+                        transition: background 0.3s;
+                    }
+                    .btn-home:hover {
+                        background: #764ba2;
+                    }
+                </style>
+            </head>
+            <body>
+                <div class="message-box">
+                    <h1>⚠️ No Active POS Session</h1>
+                    <p t-out="error_message"/>
+                    <p>Please ask your manager to open a POS session first.</p>
+                    <a href="/web" class="btn-home">Go to Homepage</a>
+                </div>
+            </body>
+        </html>
+    </template>
+</odoo>

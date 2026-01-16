@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="waiter_screen.PaymentScreen">
+        <div class="payment-screen">
+            <!-- Header -->
+            <div class="screen-header">
+                <div class="header-left">
+                    <button class="btn btn-secondary" t-on-click="props.onBack">
+                        ← Back
+                    </button>
+                    <h2>Table <t t-esc="props.table.table_number"/> - Payment</h2>
+                </div>
+                <div class="header-right">
+                    <span class="waiter-badge">👤 <t t-esc="props.waiter.name"/></span>
+                </div>
+            </div>
+
+            <div class="payment-content">
+                <!-- Order Summary -->
+                <div class="payment-summary">
+                    <h3>Order Summary</h3>
+                    <div class="summary-lines">
+                        <t t-foreach="props.order.lines" t-as="line" t-key="line_index">
+                            <div class="summary-line">
+                                <span><t t-esc="line.qty"/>x <t t-esc="line.product_name"/></span>
+                                <span>$<t t-esc="(line.qty * line.price_unit).toFixed(2)"/></span>
+                            </div>
+                        </t>
+                    </div>
+                    <div class="summary-total">
+                        <strong>Total:</strong>
+                        <strong>$<t t-esc="getOrderTotal().toFixed(2)"/></strong>
+                    </div>
+                </div>
+
+                <!-- Payment Methods -->
+                <div class="payment-methods">
+                    <h3>Payment Method</h3>
+                    <div class="methods-grid">
+                        <t t-foreach="props.paymentMethods" t-as="method" t-key="method.id">
+                            <button
+                                class="method-btn"
+                                t-att-class="{ 'active': state.selectedPaymentMethod === method.id }"
+                                t-on-click="() => this.selectPaymentMethod(method.id)">
+                                <t t-if="method.type === 'cash'">💵</t>
+                                <t t-elif="method.type === 'bank'">💳</t>
+                                <t t-else="">💰</t>
+                                <span><t t-esc="method.name"/></span>
+                            </button>
+                        </t>
+                    </div>
+                </div>
+
+                <!-- Amount Input -->
+                <div class="payment-amount">
+                    <div class="amount-row">
+                        <label>Order Total:</label>
+                        <span class="amount-value">$<t t-esc="getOrderTotal().toFixed(2)"/></span>
+                    </div>
+
+                    <div class="amount-row">
+                        <label>Amount Received:</label>
+                        <input
+                            type="number"
+                            class="form-control amount-input"
+                            t-model.number="state.amountReceived"
+                            step="0.01"
+                            min="0" />
+                    </div>
+
+                    <div class="quick-amounts">
+                        <button class="btn-quick" t-on-click="() => this.setExactAmount()">Exact</button>
+                        <button class="btn-quick" t-on-click="() => this.addAmount(5)">+$5</button>
+                        <button class="btn-quick" t-on-click="() => this.addAmount(10)">+$10</button>
+                        <button class="btn-quick" t-on-click="() => this.addAmount(20)">+$20</button>
+                    </div>
+
+                    <div class="amount-row change-row" t-if="change > 0">
+                        <label>Change:</label>
+                        <span class="change-value">$<t t-esc="change.toFixed(2)"/></span>
+                    </div>
+                </div>
+
+                <!-- Complete Payment Button -->
+                <button
+                    class="btn btn-success btn-complete-payment"
+                    t-on-click="handlePayment"
+                    t-att-disabled="state.amountReceived &lt; getOrderTotal()">
+                    Complete Payment ✓
+                </button>
+            </div>
+        </div>
+    </t>
+</templates>

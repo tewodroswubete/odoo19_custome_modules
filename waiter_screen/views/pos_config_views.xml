@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- POS Config Form View - Add Waiter Screen Settings -->
+    <record id="view_pos_config_form_waiter" model="ir.ui.view">
+        <field name="name">pos.config.form.waiter</field>
+        <field name="model">pos.config</field>
+        <field name="inherit_id" ref="point_of_sale.pos_config_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='name']" position="after">
+                <field name="enable_waiter_screen" invisible="1"/>
+                <field name="waiter_screen_url" invisible="1"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

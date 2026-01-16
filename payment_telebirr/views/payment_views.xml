@@ -1,0 +1,68 @@
+<odoo>
+    <record id="payment_provider_view_form_inherit_payment_telebirr_odoo" model="ir.ui.view">
+        <field name="name">payment.provider.view.form.inherit.payment.telebirr.odoo</field>
+        <field name="model">payment.provider</field>
+        <field name="inherit_id" ref="payment.payment_provider_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group[@name='provider_credentials']" position="inside">
+                <group invisible="code != 'telebirr'">
+                    <field name="branch_id" string="Branch"/>
+                    <field name="aggregator_payer_id" string="Aggregator Payer ID"/>
+                    <field name="domain" string="Domain"/>
+                    <field name="telebirr_api_key" string="Telebirr API Key"/>
+                    <field name="fabricAppId" string="Fabric App ID"/>
+                    <field name="merchantAppId" string="Merchant App ID"/>
+                    <field name="merchantCode" string="Merchant Code"/>
+                    <field name="appSecret" string="App Secret"/>
+                    <field name="privateKey" string="Private Key"/>
+                </group>
+                <group invisible="code != 'telebirr'" string="Payment Verification Settings">
+                    <field name="base_url" string="Telebirr Base URL"/>
+                    <field name="payment_check_mode" string="Payment Check Mode"/>
+                </group>
+                
+            </xpath>
+        </field>
+    </record>
+
+    <record id="action_pos_payment_method_form" model="ir.actions.act_window">
+        <field name="name">Zoorya Self Order</field>
+        <field name="res_model">pos.payment.method</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('id', 'in', pos_payment_method_ids)]</field>
+    </record>
+        <!-- Zoorya Self Order Template Override -->
+    <!-- Commented out: requires pos_self_order module to be installed
+    <template id="zoorya_self_order_index" inherit_id="pos_self_order.index" name="Zoorya Self Order">
+        <xpath expr="//title" position="replace">
+            <title>Zoorya Self Order</title>
+        </xpath>
+    </template>
+    -->
+</odoo>
+
+<!--<?xml version="1.0" encoding="utf-8"?>-->
+<!--<odoo>-->
+<!--    &lt;!&ndash; Updated Acquirer Form &ndash;&gt;-->
+<!--    <record id="payment_provider_form" model="ir.ui.view">-->
+<!--        <field name="name">payment.provider.view.form.inherit.payment.telebirr.odoo</field>-->
+<!--        <field name="model">payment.provider</field>-->
+<!--        <field name="inherit_id" ref="payment.payment_provider_form"/>-->
+<!--        <field name="arch" type="xml">-->
+<!--            <group name="provider_credentials" position="inside">-->
+<!--                <group invisible="code != 'telebirr'">-->
+<!--                    <field name="telebirr_api_key" string="Telebirr API Key" required="code == 'telebirr' and state != 'disabled'"/>-->
+<!--                    <field name="domain" string="API Endpoint" required="code == 'telebirr' and state != 'disabled'"/>-->
+<!--                    <field name="aggregator_payer_id" string="Aggregator Payer ID" required="code == 'telebirr' and state != 'disabled'"/>-->
+<!--                </group>-->
+<!--            </group>-->
+<!--        </field>-->
+<!--    </record>-->
+
+<!--    &lt;!&ndash; Zoorya Self Order Template Override &ndash;&gt;-->
+<!--    <template id="zoorya_self_order_index" inherit_id="pos_self_order.index" name="Zoorya Self Order">-->
+<!--        <xpath expr="//title" position="replace">-->
+<!--            <title>Zoorya Self Order</title>-->
+<!--        </xpath>-->
+<!--    </template>-->
+<!--</odoo>-->

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="waiter_screen.WaiterApp">
+        <div class="waiter-app">
+            <!-- Login Screen -->
+            <t t-if="state.currentScreen === 'login'">
+                <WaiterLoginScreen onLogin="(name, pin) => this.handleLogin(name, pin)" />
+            </t>
+
+            <!-- Table Selection Screen -->
+            <t t-elif="state.currentScreen === 'tables'">
+                <WaiterTableScreen
+                    waiter="state.waiter"
+                    tables="state.tables"
+                    floors="state.floors"
+                    onSelectTable="(table) => this.handleSelectTable(table)"
+                    onLogout="() => this.handleLogout()"
+                    onRefresh="() => this.refreshTables()" />
+            </t>
+
+            <!-- Order Taking Screen -->
+            <t t-elif="state.currentScreen === 'order'">
+                <WaiterOrderScreen
+                    waiter="state.waiter"
+                    table="state.selectedTable"
+                    order="state.currentOrder"
+                    products="state.products"
+                    categories="state.categories"
+                    onSendOrder="(order) => this.handleSendOrder(order)"
+                    onBack="() => this.handleBackToTables()" />
+            </t>
+
+            <!-- Payment Screen -->
+            <t t-elif="state.currentScreen === 'payment'">
+                <WaiterPaymentScreen
+                    waiter="state.waiter"
+                    table="state.selectedTable"
+                    order="state.currentOrder"
+                    paymentMethods="state.paymentMethods"
+                    onPayment="(data) => this.handlePayment(data)"
+                    onBack="() => this.handleBackToTables()" />
+            </t>
+        </div>
+    </t>
+</templates>

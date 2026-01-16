@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Waiter User Group -->
+    <record id="group_waiter" model="res.groups">
+        <field name="name">Waiter</field>
+        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+        <field name="comment">Waiters can take orders and process payments but cannot manage POS sessions</field>
+    </record>
+
+    <!-- Access Rules: Waiters can only see their own orders -->
+    <record id="pos_order_waiter_rule" model="ir.rule">
+        <field name="name">Waiter: Own Orders Only</field>
+        <field name="model_id" ref="point_of_sale.model_pos_order"/>
+        <field name="domain_force">[('waiter_id', '=', user.id)]</field>
+        <field name="groups" eval="[(4, ref('group_waiter'))]"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_create" eval="True"/>
+        <field name="perm_unlink" eval="False"/>
+    </record>
+
+    <!-- Waiters can read all tables but not modify them -->
+    <record id="restaurant_table_waiter_rule" model="ir.rule">
+        <field name="name">Waiter: All Tables (Read Only)</field>
+        <field name="model_id" ref="pos_restaurant.model_restaurant_table"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+        <field name="groups" eval="[(4, ref('group_waiter'))]"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="False"/>
+        <field name="perm_create" eval="False"/>
+        <field name="perm_unlink" eval="False"/>
+    </record>
+
+    <!-- Waiters can read all products -->
+    <record id="product_waiter_rule" model="ir.rule">
+        <field name="name">Waiter: All Products (Read Only)</field>
+        <field name="model_id" ref="product.model_product_product"/>
+        <field name="domain_force">[('available_in_pos', '=', True)]</field>
+        <field name="groups" eval="[(4, ref('group_waiter'))]"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="False"/>
+        <field name="perm_create" eval="False"/>
+        <field name="perm_unlink" eval="False"/>
+    </record>
+
+    <!-- Waiters can read sessions but not modify -->
+    <record id="pos_session_waiter_rule" model="ir.rule">
+        <field name="name">Waiter: Sessions (Read Only)</field>
+        <field name="model_id" ref="point_of_sale.model_pos_session"/>
+        <field name="domain_force">[('state', '=', 'opened')]</field>
+        <field name="groups" eval="[(4, ref('group_waiter'))]"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="False"/>
+        <field name="perm_create" eval="False"/>
+        <field name="perm_unlink" eval="False"/>
+    </record>
+
+    <!-- Action to open waiter screen - must be defined before menuitem -->
+    <record id="action_waiter_screen" model="ir.actions.act_url">
+        <field name="name">Waiter Screen</field>
+        <field name="url">/pos/waiter</field>
+        <field name="target">new</field>
+    </record>
+
+    <!-- Menu Items for Waiters -->
+    <menuitem
+        id="menu_waiter_root"
+        name="Waiter Screen"
+        sequence="100"
+        groups="group_waiter"
+        web_icon="waiter_screen,static/description/icon.png"/>
+
+    <menuitem
+        id="menu_waiter_screen"
+        name="Open Waiter Screen"
+        parent="menu_waiter_root"
+        sequence="1"
+        groups="group_waiter"
+        action="action_waiter_screen"/>
+</odoo>

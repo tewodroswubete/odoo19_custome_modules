@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="payment_method_telebirr" model="payment.method">
+        <field name="name">telebirr</field>
+        <field name="code">telebirr</field>
+        <field name="image" type="base64" file="payment_telebirr/static/description/logo.png"/>
+        <field name="sequence">2</field>
+    </record>
+</odoo>

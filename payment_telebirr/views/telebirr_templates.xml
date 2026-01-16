@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <!-- Inline form rendered by payment.form -->
+  <template id="telebirr_inline_form" name="payment_telebirr.telebirr_inline_form">
+    <!-- the controller passes ‘telebirr_vals_json’ inside rendering_values -->
+    <div class="o_telebirr_inline_form" name="o_telebirr_inline_container">
+      <script type="application/json" name="telebirr_data">
+        <t t-out="telebirr_vals_json or '{}'"/>
+      </script>
+      <p>Launching Telebirr…</p>
+    </div>
+  </template>
+</odoo>
